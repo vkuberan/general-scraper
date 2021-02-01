@@ -56,7 +56,7 @@ def create_related_dirs(project_dirs):
 
 
 # Fetch that url and save it locally and can we used for future use
-def fetch_data(link_source, html_file_to_save):
+def fetch_data(link_source, html_file_to_save=''):
 
     html_source = ''
     try:
