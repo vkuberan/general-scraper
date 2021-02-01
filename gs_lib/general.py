@@ -42,6 +42,15 @@ def clear_screen():
     return subprocess.call(command, shell=True)
 
 
+# replace list of unicode chars (or any chars mentioned in the
+# replacement list)
+def wiki_replace_unicode(html_string, list_of_replacements):
+    for key, val in list_of_replacements.items():
+        html_string = html_string.replace(key, val)
+
+    return html_string
+
+
 def print_char_under_string(msg, char='*', newline='\n\n'):
     msg += "\n" + (char * len(msg))
     print(msg, end=newline)
