@@ -1,12 +1,18 @@
 from gs_lib import general
 from bs4 import BeautifulSoup
 
+types_of_content = {
+    'entertainment': ['award', 'filmography', 'performance',
+                      'videography', 'discography'],
+}
 
 # if classname is specified, it will look for the table with the class
 # name otherwise it will get the first table found in the page
 # (mostly this information table is found at the top of the page) If
 # information table is found, it will be parsed and data will be send
 # otherwise an empty message will be send
+
+
 def find_wiki_info_table(data, classname='infobox', contenttype='general'):
     soup = BeautifulSoup(data, 'lxml')
 
@@ -26,7 +32,8 @@ def find_wiki_info_table(data, classname='infobox', contenttype='general'):
     iCnt = 0
     for data_row in data_rows:
         replace_html = {
-            u'\xa0': u' '
+            u'\xa0': u' ',
+            '\u200b': ''
         }
         data_captions = data_row.find('th')
         data_contents = data_row.find('td')
@@ -39,10 +46,13 @@ def find_wiki_info_table(data, classname='infobox', contenttype='general'):
             pass
         else:
             header = data_captions.get_text(strip=True)
-            header = general.wiki_replace_unicode(header, replace_html)
+            header = general.wiki_replace_unicode(header, replace_html).strip()
             content = data_contents.get_text(separator=', ', strip=True)
             data[header] = general.wiki_replace_unicode(content, replace_html)
 
         iCnt += 1
+
+    if contenttype == 'entertainment':
+        # types_of_content[contenttype]
 
     return data
