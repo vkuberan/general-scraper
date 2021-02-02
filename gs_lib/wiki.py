@@ -53,6 +53,7 @@ def find_wiki_info_table(data, classname='infobox', contenttype='general'):
         iCnt += 1
 
     if contenttype == 'entertainment':
+        pass
         # types_of_content[contenttype]
 
     return data
